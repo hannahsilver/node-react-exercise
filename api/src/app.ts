@@ -24,6 +24,7 @@ app.use('/', (err: Error, req: Request, res: Response, next: NextFunction) => {
     message: err.message,
   };
 
+  res.header('Access-Control-Allow-Origin', '*');
   res.status(status);
   res.json(formattedError);
 });
