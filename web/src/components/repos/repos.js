@@ -19,11 +19,16 @@ export function Repos() {
     <div className="App">
       <p>hi</p>
       {repos && (
-        <ul>
+        <div>
           {repos.map((repo) => (
-            <li key={repo.id}>{repo.name}</li>
+            <ul key={repo.id}>
+              <li>{repo.name}</li>
+              <li>description: {repo.description}</li>
+              <li>language: {repo.language}</li>
+              <li>forks count: {repo.forks_count}</li>
+            </ul>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );
