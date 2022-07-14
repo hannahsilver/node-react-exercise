@@ -3,6 +3,11 @@ import React, { useState, useEffect } from 'react';
 export function Repos() {
   const [repos, setRepos] = useState([]);
 
+  const sortedRepos = repos.sort((a, b) =>
+    a.created_at < b.created_at ? 1 : -1
+  );
+  //   console.log(sortedRepos, 'sorted');
+
   useEffect(() => {
     fetch('http://localhost:4000/repos')
       .then((res) => {
@@ -20,7 +25,7 @@ export function Repos() {
       <p>hi</p>
       {repos && (
         <div>
-          {repos.map((repo) => (
+          {sortedRepos.map((repo) => (
             <ul key={repo.id}>
               <li>{repo.name}</li>
               <li>description: {repo.description}</li>
