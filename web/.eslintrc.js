@@ -29,7 +29,7 @@ function convertOverridesToArray(overrides) {
 // tslint-react).
 /** @type {import('eslint').Linter.Config} */
 const newConfig = Object.assign({}, config, {
-  extends: [...config.extends, 'react-app/jest', 'plugin:prettier/recommended'],
+  extends: [...config.extends, 'react-app/jest'],
   rules: Object.assign(updateWarnRulesToErrorRules(config.rules), {
     'react/jsx-boolean-value': ['error', 'always'],
     'react/jsx-key': 'error',
