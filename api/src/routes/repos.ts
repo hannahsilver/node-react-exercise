@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import data from "../../data/repos.json";
+import data from '../../data/repos.json';
 
 export const repos = Router();
 
