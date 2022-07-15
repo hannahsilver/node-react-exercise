@@ -3,11 +3,13 @@ import React, { useState, useEffect } from 'react';
 export function Repos() {
   const [repos, setRepos] = useState([]);
 
+  //sort by creation date in descending order
   const sortedRepos = repos.sort((a, b) =>
     a.created_at < b.created_at ? 1 : -1
   );
   //   console.log(sortedRepos, 'sorted');
 
+  //fetch from backend
   useEffect(() => {
     fetch('http://localhost:4000/repos')
       .then((res) => {
@@ -18,11 +20,10 @@ export function Repos() {
         setRepos(data);
       });
     // console.log(repos, 'repos');
-  });
+  }, []);
 
   return (
     <div className="App">
-      <p>hi</p>
       {repos && (
         <div>
           {sortedRepos.map((repo) => (
