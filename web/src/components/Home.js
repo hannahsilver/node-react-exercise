@@ -25,7 +25,7 @@ export function Home() {
 
   //create array with just languages
   const langArray = repos.map((repo) => {
-    return [repo.language];
+    return repo.language;
   });
   // console.log(langArray);
 
@@ -48,7 +48,7 @@ export function Home() {
             <button
               key={lang}
               onClick={() => {
-                handleClick(lang[0]);
+                handleClick(lang);
                 // console.log(lang, 'lang');
               }}
             >
