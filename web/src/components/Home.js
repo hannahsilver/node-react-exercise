@@ -58,7 +58,7 @@ export function Home() {
         })}
       </ul>
       {repos && (
-        <div>
+        <div className="container">
           {filteredRepos.map((repo) => {
             return (
               <Repo

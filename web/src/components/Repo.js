@@ -2,11 +2,11 @@ import React from 'react';
 
 export function Repo(props) {
   return (
-    <ul key={props.id}>
-      <li>{props.name}</li>
-      <li>{props.description}</li>
-      <li>{props.language}</li>
-      <li>{props.forksCount}</li>
+    <ul key={props.id} className="repo-container">
+      <li> NAME: {props.name}</li>
+      <li>DESCRIPTION: {props.description}</li>
+      <li>LANGUAGE: {props.language}</li>
+      <li>FORKS COUNT: {props.forksCount}</li>
     </ul>
   );
 }
