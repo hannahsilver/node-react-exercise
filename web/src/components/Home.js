@@ -3,14 +3,25 @@ import Repo from './Repo';
 
 export function Home() {
   const [repos, setRepos] = useState([]);
-  //filteredRepo, setFilteredRepo
-  // const [language, setLanguage] = useState('');
+  const [filteredRepos, setFilteredRepos] = useState(repos);
 
-  //sort by creation date in descending order
-  const sortedRepos = repos.sort((a, b) =>
-    a.created_at < b.created_at ? 1 : -1
-  );
-  //   console.log(sortedRepos, 'sorted');
+  //fetch from backend
+  useEffect(() => {
+    fetch('http://localhost:4000/repos')
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        // console.log(data);
+        //sort by creation date in descending order
+        const sortedData = data.sort((a, b) =>
+          a.created_at < b.created_at ? 1 : -1
+        );
+        // console.log(sortedData);
+        setRepos(sortedData);
+        setFilteredRepos(sortedData);
+      });
+  }, []);
 
   //create array with just languages
   const langArray = repos.map((repo) => {
@@ -22,24 +33,33 @@ export function Home() {
   const filterLangArray = [...new Set(langArray)];
   // console.log(filterLangArray);
 
-  //fetch from backend
-  useEffect(() => {
-    fetch('http://localhost:4000/repos')
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        // console.log(data);
-        setRepos(data);
-      });
-    // console.log(repos, 'repos');
-  }, []);
+  // filtering data by language type
+  function handleClick(language) {
+    const filterLanguage = repos.filter((repo) => repo.language === language);
+    // console.log(filterLanguage, 'filterlang');
+    return setFilteredRepos(filterLanguage);
+  }
 
   return (
     <div className="App">
+      <ul>
+        {filterLangArray.map((lang) => {
+          return (
+            <button
+              key={lang}
+              onClick={() => {
+                handleClick(lang[0]);
+                // console.log(lang, 'lang');
+              }}
+            >
+              {lang}
+            </button>
+          );
+        })}
+      </ul>
       {repos && (
         <div>
-          {sortedRepos.map((repo) => {
+          {filteredRepos.map((repo) => {
             return (
               <Repo
                 key={repo.id}
@@ -50,11 +70,6 @@ export function Home() {
               />
             );
           })}
-          <ul>
-            {filterLangArray.map((language) => {
-              return <button key={language}>{language}</button>;
-            })}
-          </ul>
         </div>
       )}
     </div>

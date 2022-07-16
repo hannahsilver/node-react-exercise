@@ -11,7 +11,7 @@ export function Repo(props) {
   );
 }
 
-export function Repo;
+export default Repo;
 
 // let history = useHistory();
 // history.push(`/repo/${id}`);
