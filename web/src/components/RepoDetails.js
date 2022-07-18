@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export function RepoDetails() {
+  const navigate = useNavigate();
+
   const repoId = useParams();
   const [repo, setRepo] = useState({});
   const [name, setName] = useState('');
@@ -42,14 +45,13 @@ export function RepoDetails() {
       });
   }, [repo]);
 
-  //fetch read me
   useEffect(() => {
     fetch(
       `https://raw.githubusercontent.com/${repo.full_name}/master/README.md`
     )
       .then((res) => res.text())
       .then((data) => {
-        // console.log(data, 'readme');
+        console.log(data, 'readme');
         setReadMe(data);
       })
       .catch((error) => {
@@ -59,6 +61,15 @@ export function RepoDetails() {
 
   return (
     <div>
+      <button
+        onClick={(ev) => {
+          ev.stopPropagation();
+          // console.log('hi');
+          navigate('/');
+        }}
+      >
+        back to repos
+      </button>
       {name ? (
         <div>
           <ul>
