@@ -45,43 +45,49 @@ export function Home() {
 
   return (
     <div className="App">
-      <ul>
-        {filterLangArray.map((lang) => {
-          return (
-            <button
-              key={lang}
-              onClick={() => {
-                handleClick(lang);
-                // console.log(lang, 'lang');
-              }}
-            >
-              {lang}
-            </button>
-          );
-        })}
-      </ul>
-      <div className="container">
-        {filteredRepos.map((repo) => {
-          return (
-            <div
-              key={repo.id}
-              onClick={(ev) => {
-                ev.stopPropagation();
-                // console.log('hi');
-                navigate(`/${repo.id}`);
-              }}
-            >
-              <Repo
-                key={repo.id}
-                name={repo.name}
-                description={repo.description}
-                language={repo.language}
-                forksCount={repo.forks_count}
-              />
-            </div>
-          );
-        })}
-      </div>
+      {repos ? (
+        <div>
+          <ul>
+            {filterLangArray.map((lang) => {
+              return (
+                <button
+                  key={lang}
+                  onClick={() => {
+                    handleClick(lang);
+                    // console.log(lang, 'lang');
+                  }}
+                >
+                  {lang}
+                </button>
+              );
+            })}
+          </ul>
+          <div className="container">
+            {filteredRepos.map((repo) => {
+              return (
+                <div
+                  key={repo.id}
+                  onClick={(ev) => {
+                    ev.stopPropagation();
+                    // console.log('hi');
+                    navigate(`/${repo.id}`);
+                  }}
+                >
+                  <Repo
+                    key={repo.id}
+                    name={repo.name}
+                    description={repo.description}
+                    language={repo.language}
+                    forksCount={repo.forks_count}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ) : (
+        <p>loading...</p>
+      )}
     </div>
   );
 }
