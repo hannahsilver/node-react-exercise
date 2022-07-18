@@ -4,9 +4,14 @@ import { useParams } from 'react-router-dom';
 export function RepoDetails() {
   const repoId = useParams();
   const [repo, setRepo] = useState({});
+  const [name, setName] = useState('');
+  const [date, setDate] = useState('');
+  const [message, setMessage] = useState('');
 
-  console.log(repo);
+  // console.log(repo);
+  // console.log(repo.full_name);
 
+  // fetch data from id
   useEffect(() => {
     fetch('http://localhost:4000/repos')
       .then((res) => res.json())
@@ -21,9 +26,32 @@ export function RepoDetails() {
       });
   }, [repoId]);
 
+  //fetch commits
+  useEffect(() => {
+    fetch(`https://api.github.com/repos/${repo.full_name}/commits`)
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data);
+        setName(data[0].commit.author.name);
+        setDate(data[0].commit.author.date);
+        setMessage(data[0].commit.message);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [repo]);
+
   return (
     <div>
-      <p>hi</p>
+      {name ? (
+        <ul>
+          <li>NAME: {name}</li>
+          <li>DATE: {date}</li>
+          <li>MESSAGE: {message}</li>
+        </ul>
+      ) : (
+        <p>loading...</p>
+      )}
     </div>
   );
 }
