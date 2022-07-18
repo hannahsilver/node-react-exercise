@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Repo from './Repo';
+import { useNavigate } from 'react-router-dom';
 
 export function Home() {
+  const navigate = useNavigate();
+
   const [repos, setRepos] = useState([]);
   const [filteredRepos, setFilteredRepos] = useState(repos);
 
@@ -57,10 +60,17 @@ export function Home() {
           );
         })}
       </ul>
-      {repos && (
-        <div className="container">
-          {filteredRepos.map((repo) => {
-            return (
+      <div className="container">
+        {filteredRepos.map((repo) => {
+          return (
+            <div
+              key={repo.id}
+              onClick={(ev) => {
+                ev.stopPropagation();
+                // console.log('hi');
+                navigate(`/${repo.id}`);
+              }}
+            >
               <Repo
                 key={repo.id}
                 name={repo.name}
@@ -68,10 +78,10 @@ export function Home() {
                 language={repo.language}
                 forksCount={repo.forks_count}
               />
-            );
-          })}
-        </div>
-      )}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
