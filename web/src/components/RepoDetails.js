@@ -7,6 +7,7 @@ export function RepoDetails() {
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
   const [message, setMessage] = useState('');
+  const [readMe, setReadMe] = useState('');
 
   // console.log(repo);
   // console.log(repo.full_name);
@@ -41,14 +42,32 @@ export function RepoDetails() {
       });
   }, [repo]);
 
+  //fetch read me
+  useEffect(() => {
+    fetch(
+      `https://raw.githubusercontent.com/${repo.full_name}/master/README.md`
+    )
+      .then((res) => res.text())
+      .then((data) => {
+        // console.log(data, 'readme');
+        setReadMe(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [repo]);
+
   return (
     <div>
       {name ? (
-        <ul>
-          <li>NAME: {name}</li>
-          <li>DATE: {date}</li>
-          <li>MESSAGE: {message}</li>
-        </ul>
+        <div>
+          <ul>
+            <li>NAME: {name}</li>
+            <li>DATE: {date}</li>
+            <li>MESSAGE: {message}</li>
+          </ul>
+          {readMe ? <p>{readMe}</p> : null}
+        </div>
       ) : (
         <p>loading...</p>
       )}
